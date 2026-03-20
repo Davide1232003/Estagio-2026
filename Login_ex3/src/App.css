@@ -1,0 +1,18 @@
+*{
+  margin: 0px;  
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Helvetica;
+  text-shadow: black 1px 1px;
+  font-family: Helvetica;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url(assets/bg.webp);
+  background-size: cover;
+  background-position: center;
+}

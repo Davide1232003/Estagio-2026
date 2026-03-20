@@ -1,0 +1,61 @@
+body {
+  font-family: sans-serif;
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.status {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  font-weight: bold;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  font-size: 36px;
+  border: 2px solid #cccccc;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.3s ease-in-out;  
+}
+
+.cell:hover {
+  background-color: #f0f0f0;
+}
+
+.reset-button {
+  padding: 5px 10px;
+}
+
+.historico {
+    color: black;
+    font-size: 16px;
+    margin-top: 100px;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 150px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.score-item {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 15px;
+}

@@ -1,0 +1,41 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; 
+}
+
+.main-layout {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.content-container {
+  display: flex;       
+  flex-direction: column; 
+  align-items: center;   
+  gap: 20px;             
+  padding: 10px 0;        
+  position: relative;   
+  z-index: 1;
+  width: 100%;
+}
+
+.logo-loop {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.circular-gallery {
+    height: 600px; 
+    position: relative; 
+    width: 100%;
+}
+
+.menu {
+      margin: auto;
+      z-index: 100;
+}

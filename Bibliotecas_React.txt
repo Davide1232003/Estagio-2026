@@ -1,0 +1,5 @@
+React Icons - icons
+React Blits - diferentes componentes 
+Lucide - icons
+uuid - cria ID´s aleatórios 
+React Router - ajudar na navegação de páginas

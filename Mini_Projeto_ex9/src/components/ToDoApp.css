@@ -1,0 +1,78 @@
+.body {
+    font-family:Helvetica;
+}
+
+.title {
+    color: rgb(105, 105, 105);
+    text-align: center;
+}
+
+.empty {
+    text-align: center;
+}
+
+.app-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 40px 60px;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+   
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.input-field {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-button {
+    padding: 10px 20px;
+    background-color: #15c93f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    background-color: #fafafa;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;  
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.delete-button {
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.texto-animado {
+    max-width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto;
+}

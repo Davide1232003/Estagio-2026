@@ -1,0 +1,30 @@
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background-color: #fff;
+  border-radius: 0.8rem;
+}
+
+.user-card-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.button {
+  margin-left: auto;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  background: linear-gradient(180deg, #ff0000, #ff7777);
+  color: #fff;
+  padding: 8px;
+  border: none;
+  transition: 0.3s;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
