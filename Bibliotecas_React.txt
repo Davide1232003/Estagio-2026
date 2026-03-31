@@ -3,3 +3,5 @@ React Blits - diferentes componentes
 Lucide - icons
 uuid - cria ID´s aleatórios 
 React Router - ajudar na navegação de páginas
+Remix Icon - bilbliotec de icons não só para o react
+Font Awesome - icons

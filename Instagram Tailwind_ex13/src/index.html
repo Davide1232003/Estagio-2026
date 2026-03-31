@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind Instagram</title>
+    <link href="./output.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="h-screen w-screen grid grid-cols-2 grid-rows-6 p-12">
+      <!-- Imagem Princial -->
+      <div class="row-span-5 flex justify-end">
+        <img class="w-max-96" src="./img/celular.png" />
+      </div>
+
+      <!-- Formulário -->
+      <div
+        class="row-span-5 flex flex-col justify-center itens-center grid-cols-1"
+      >
+        <form
+          class="w-80 flex flex-col justify-center itens center border rounded-sm px-10 py-4 gap-5"
+        >
+          <img class="w-52" src="./img/insta-logo.png" />
+
+          <input
+            class="bg-slate-50 h-9 w-full pl-3 border rounded-sm"
+            type="text"
+            placeholder="Número de Telefone e email"
+          />
+          <input
+            class="bg-slate-50 h-9 w-full pl-3 border rounded-sm"
+            type="text"
+            placeholder="PassWord"
+          />
+
+          <button
+            class="bg-blue-400 w-full rounded-md h-8 text-slate-50 hover:bg-blue-300"
+          >
+            Entrar
+          </button>
+
+          <a class="text-blue-800 font-bold cursor pointer text-center"
+            >Logar com o Fcebook</a
+          >
+          <a class="text-blue-800 text-sm cursor pointer text-center"
+            >Esqueci-me da Password</a
+          >
+        </form>
+
+        <div class="border w-80 my-4 text-center py-4">
+          <p>
+            Náo tem conta? <a class="text-blue-400 font-bold">Registe-se!</a>
+          </p>
+        </div>
+
+        <p class="pl-24">Baixe aplicação!</p>
+      </div>
+
+      <!-- Rodapé -->
+      <div class="row-span-1 col-span-2 mt-10">
+        <ul class="flex flex-wrap gap-5 justify-center">
+          <li class="tex-slate-800 text-sm">Meta</li>
+          <li class="tex-slate-800 text-sm">About</li>
+          <li class="tex-slate-800 text-sm">Blog</li>
+          <li class="tex-slate-800 text-sm">Jobs</li>
+          <li class="tex-slate-800 text-sm">Help</li>
+          <li class="tex-slate-800 text-sm">API</li>
+          <li class="tex-slate-800 text-sm">Privacy</li>
+          <li class="tex-slate-800 text-sm">Terms</li>
+          <li class="tex-slate-800 text-sm">Locations</li>
+          <li class="tex-slate-800 text-sm">Instagram Lite</li>
+          <li class="tex-slate-800 text-sm">Threads</li>
+          <li class="tex-slate-800 text-sm">Contact uploading and non.users</li>
+          <li class="tex-slate-800 text-sm">Meta Verified</li>
+        </ul>
+
+        <ul class="flex flex-wrap gap-5 justify-center mt-6">
+          <li class="tex-slate-800">Português</li>
+          <li class="tex-slate-800">2026 Instagram from Meta</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

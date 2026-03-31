@@ -1,0 +1,297 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sytles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Youtube Tailwind</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.1/fonts/remixicon.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header
+      class="fixed top-0 right-0 left-0 bg-white z-50 px-4 py-2 flex items-center justify-between border-b border-gray-200"
+    >
+      <div class="flex items-center gap-4">
+        <button class="p-2 hover:bg-gray-100 cursor-pointer">
+          <i class="ri-menu-line text-xl"></i>
+        </button>
+
+        <div class="flex items-center gap-1 cursor-pointer">
+          <i class="ri-youtube-fill text-3xl text-red-600"></i>
+          <span class="text-xl font-semibold">YouTube</span>
+        </div>
+      </div>
+
+      <form class="flex-1 max-w-2xl mx-4 flex">
+        <input
+          type="text"
+          placeholder="Pesquisar"
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-l-full"
+        />
+        <button
+          class="px-6 py-4 bg-gray-50 border border-gray-300 rounded-r-full"
+        >
+          <i class="ri-search-line"></i>
+        </button>
+        <button
+          class="ml-2 px-4 py 2 bg-gray-100 rounded-full hover:bg-gray-200"
+        >
+          <i class="ri-mic-fill"></i>
+        </button>
+      </form>
+
+      <div class="flex items-center gap-2">
+        <button class="p-2 hover:bg-gray-100 rounded-full">
+          <i class="ri-video-add-line text-xl"></i>
+        </button>
+        <button class="p-2 hover:bg-gray-100 rounded-full">
+          <i class="ri-notification-3-line text-xl"></i>
+        </button>
+        <button
+          class="ml-2 w-8 h-8 bg-purple-600 rounded-full text-white text-semibold"
+        >
+          R
+        </button>
+      </div>
+    </header>
+
+    <div class="flex pt-14">
+      <aside class="fixed left-0 top-14 w-60 bg-white overflow-y-auto py-6">
+        <nav class="space-y-1">
+          <a href="#" class="flex items-center gap-6 px-6 py-2 bg-gray-100">
+            <i class="ri-home-4-fill text-xl"></i>
+            <span class="text-sm font-medium">Início</span>
+          </a>
+          <a class="flex items-center gap-6 px-6 py-2 hover:bg-gray-100">
+            <i class="ri-compass-3-line text-xl"></i>
+            <span class="text-sm font-medium">Explorar</span>
+          </a>
+          <a class="flex items-center gap-6 px-6 py-2 hover:bg-gray-100">
+            <i class="ri-play-list-2-line text-xl"></i>
+            <span class="text-sm font-medium">Incrições</span>
+          </a>
+
+          <hr class="mx-6 my-3 text-gray-200" />
+
+          <a class="flex items-center gap-6 px-6 py-2 hover:bg-gray-100">
+            <i class="ri-history-line text-xl"></i>
+            <span class="text-sm font-medium">Histório</span>
+          </a>
+
+          <a class="flex items-center gap-6 px-6 py-2 hover:bg-gray-100">
+            <i class="ri-time-line text-xl"></i>
+            <span class="text-sm font-medium">Ver mais tarde</span>
+          </a>
+
+          <a class="flex items-center gap-6 px-6 py-2 hover:bg-gray-100">
+            <i class="ri-thumb-up-line text-xl"></i>
+            <span class="text-sm font-medium">Vídeos Marcados</span>
+          </a>
+
+          <hr class="mx-6 my-3 text-gray-200" />
+
+          <h3 class="px-6 py-2 text-sm fonte-medium text-gray-900">
+            Incrições
+          </h3>
+          <a class="flex items-center gap-6 px-6 py-2 hover:bg-gray-100">
+            <div class="w-6 h-6 bg-red-500 rounded-full"></div>
+            <span class="text-sm font-medium">Tech Channel</span>
+          </a>
+          <a class="flex items-center gap-6 px-6 py-2 hover:bg-gray-100">
+            <div class="w-6 h-6 bg-blue-500 rounded-full"></div>
+            <span class="text-sm font-medium">Agro Channel</span>
+          </a>
+          <a class="flex items-center gap-6 px-6 py-2 hover:bg-gray-100">
+            <div class="w-6 h-6 bg-green-500 rounded-full"></div>
+            <span class="text-sm font-medium">Games Channel</span>
+          </a>
+        </nav>
+      </aside>
+
+      <main class="flex-1 ml-60 p-6">
+        <div class="flex gap-3 mb-6 overflow-x-auto pb-2 pt-2">
+          <button
+            class="px-3 py-1 bg-gray-900 text-white rounded-lg text-sm whitespace-nowrap"
+          >
+            Tudo
+          </button>
+          <button
+            class="px-3 py-1 bg-gray-100 text-black rounded-lg text-sm whitespace-nowrap"
+          >
+            Culinária
+          </button>
+          <button
+            class="px-3 py-1 bg-gray-100 text-black rounded-lg text-sm whitespace-nowrap"
+          >
+            Música
+          </button>
+          <button
+            class="px-3 py-1 bg-gray-100 text-black rounded-lg text-sm whitespace-nowrap"
+          >
+            Jogos
+          </button>
+          <button
+            class="px-3 py-1 bg-gray-100 text-black rounded-lg text-sm whitespace-nowrap"
+          >
+            Programação
+          </button>
+          <button
+            class="px-3 py-1 bg-gray-100 text-black rounded-lg text-sm whitespace-nowrap"
+          >
+            Ciclismo
+          </button>
+          <button
+            class="px-3 py-1 bg-gray-100 text-black rounded-lg text-sm whitespace-nowrap"
+          >
+            Futsal
+          </button>
+        </div>
+
+        <div class="grid grid-cols-4 gap-4" id="videos"></div>
+      </main>
+    </div>
+  </body>
+
+  <script>
+    const videos = [
+      {
+        title: "Curso Completo de Tailwind CSS - Do Zero ao Avançado",
+        channel: "Tech Channel",
+        views: "125 mil",
+        time: "há 2 dias",
+        duration: "10:25",
+        color: "red",
+        isLive: false,
+      },
+      {
+        title: "Live Coding: Criando um Dashboard com React e TypeScript",
+        channel: "Code Academy",
+        views: "3,2 mil",
+        time: "agora",
+        duration: "25:47",
+        color: "blue",
+        isLive: true,
+      },
+      {
+        title: "UI/UX Design Trends 2025 - O que está por vir?",
+        channel: "Design Masters",
+        views: "89 mil",
+        time: "há 1 semana",
+        duration: "15:30",
+        color: "green",
+        isLive: false,
+      },
+      {
+        title: "JavaScript Avançado: Promises, Async/Await e Event Loop",
+        channel: "Dev Pro",
+        views: "230 mil",
+        time: "há 3 dias",
+        duration: "45:12",
+        color: "purple",
+        isLive: false,
+      },
+      {
+        title: "5 Extensões VS Code que Todo Dev Precisa Conhecer",
+        channel: "Dicas Dev",
+        views: "45 mil",
+        time: "há 5 horas",
+        duration: "8:45",
+        color: "yellow",
+        isLive: false,
+      },
+      {
+        title: "Deploy de Aplicações Node.js na AWS - Tutorial Completo",
+        channel: "Cloud Masters",
+        views: "156 mil",
+        time: "há 2 semanas",
+        duration: "32:18",
+        color: "pink",
+        isLive: false,
+      },
+      {
+        title: "Git e GitHub na Prática - Workflow Profissional",
+        channel: "Dev Tools",
+        views: "320 mil",
+        time: "há 1 mês",
+        duration: "18:30",
+        color: "indigo",
+        isLive: false,
+      },
+      {
+        title: "CSS Grid vs Flexbox - Quando usar cada um?",
+        channel: "Frontend Basics",
+        views: "78 mil",
+        time: "há 4 dias",
+        duration: "22:45",
+        color: "orange",
+        isLive: false,
+      },
+      {
+        title: "Next.js 14 - As Novidades que Você Precisa Saber",
+        channel: "React Brasil",
+        views: "190 mil",
+        time: "há 1 semana",
+        duration: "12:30",
+        color: "teal",
+        isLive: false,
+      },
+      {
+        title: "MongoDB vs PostgreSQL - Qual Banco Escolher?",
+        channel: "Database Pro",
+        views: "410 mil",
+        time: "há 3 semanas",
+        duration: "28:15",
+        color: "cyan",
+        isLive: false,
+      },
+      {
+        title: "Arquitetura de Microsserviços com Node.js - Curso Completo",
+        channel: "Backend Masters",
+        views: "520 mil",
+        time: "há 2 meses",
+        duration: "55:30",
+        color: "lime",
+        isLive: false,
+      },
+      {
+        title: "TypeScript Tips & Tricks - Produtividade no Próximo Nível",
+        channel: "TS Brasil",
+        views: "145 mil",
+        time: "há 6 dias",
+        duration: "19:45",
+        color: "rose",
+        isLive: false,
+      },
+    ];
+
+    const container = document.getElementById("videos");
+
+    videos.forEach((video, i) => {
+      const videoCard = document.createElement("article");
+
+      videoCard.className = "cursor-pointer";
+
+      videoCard.innerHTML = `
+      <div class="relative bg-gray-200 rounded-xl overflow-hidden">
+        <img src="https://picsum.photos/320/180?random=${i + 1}" alt="${video.title}" class="w-full h-full object-cover">
+         <span class="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-1 rounded">${video.duration}</span>
+         ${video.isLive ? '<span class="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded uppercase font-semibold">Ao vivo</span>' : ""}
+      </div>
+      <div class="flex gap-3 mt-3">
+        <div>
+          <h3 class="font-medium text-sm line-clamp-2">${video.title}</h3>
+          <p class="text-sm text-gray-600 mt-1">${video.channel}</p>
+          <p class="text-sm text-gray-600">${video.isLive ? `${video.views} assistindo ${video.time}` : `${video.views} visualizações • ${video.time}`}</p>
+        </div>
+       </div>
+      `;
+
+      container.appendChild(videoCard);
+    });
+  </script>
+</html>
