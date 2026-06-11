@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Slidebar from "../components/Slidebar";
-import Navbar from "../components/Navbar";
 import fundo from "../assets/fundo.jpg";
 
 function MainLayout() {
@@ -23,8 +22,6 @@ function MainLayout() {
           <Slidebar />
 
           <div className="flex flex-col flex-1">
-            {/* <Navbar /> */}
-
             {/* Conteúdo Dinâmico */}
             <main className="flex-1 overflow-y-auto p-8 text-white">
               <Outlet />

@@ -29,23 +29,19 @@ function Logout() {
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
-      {/* 2. Container com o teu Design de Perfil */}
+      {/* Container com o teu Design de Perfil */}
       <div className="relative z-10 w-full max-w-sm px-6">
         <div className="bg-white/[0.01] backdrop-blur-[15px] border border-white/20 rounded-[30px] p-10 shadow-2xl flex flex-col items-center text-center animate-in fade-in zoom-in duration-500">
-          <div className="w-20 h-20 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center text-red-500 mb-6 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+          <div className="w-20 h-20 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center text-red-500 mb-6">
             <LogOut size={32} />
           </div>
-
           <h2 className="text-white text-2xl font-bold tracking-tight mb-2">
             A sair...
           </h2>
-          <p className="text-slate-400 text-sm mb-8">
+          <p className="text-slate-400 text-sm mb-10">
             Estamos a encerrar a tua sessão em segurança.
           </p>
-
-          {/* Spinner de Loading */}
-          <Loader2 size={24} className="text-orange-500 animate-spin" />
-
+          <Loader2 size={26} className="text-orange-500 animate-spin" />
           <p className="text-[10px] text-slate-600 mt-10 uppercase tracking-widest font-bold">
             Strava Dash
           </p>

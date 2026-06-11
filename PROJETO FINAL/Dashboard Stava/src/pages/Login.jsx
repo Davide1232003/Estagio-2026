@@ -1,17 +1,24 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { User, Lock } from "lucide-react";
 import fundo from "../assets/fundo.jpg";
 
 function Login() {
   const navigate = useNavigate();
 
-  //Disparar o fluxo do Backend
+  // disparar o fluxo do Backend
   const handleLogin = (e) => {
     e.preventDefault();
     // Redireciona para o teu servidor Express que faz a ponte com o Strava
     window.location.href = "http://localhost:3000/login";
   };
+
+  // caso já exista o token, redireciona para o dashboard
+  useEffect(() => {
+    const token = localStorage.getItem("strava_token");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   return (
     <div className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-slate-950">
@@ -26,18 +33,17 @@ function Login() {
 
       <div className="relative z-10 w-full max-w-md px-6">
         <div className="bg-white/[0.02] backdrop-blur-[20px] border border-white/10 rounded-[30px] p-10 shadow-2xl">
-          <div className="text-center mb-10">
+          <div className="text-center mb-8  ">
             <h2 className="text-white text-3xl font-bold tracking-tight">
               STRAVA <span className="text-orange-500 font-light">DASH</span>
             </h2>
-            <p className="text-slate-400 text-sm mt-2">
+            <p className="text-slate-400 text-sm mt-8">
               Conecte a tua conta Strava para visualizar o teu progresso e
               descobrir novas informações.
             </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
-            <div className="space-y-3 opacity-50 pointer-events-none"></div>
             <button
               type="submit"
               className="w-full flex justify-center items-center bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded-2xl transition-all shadow-lg gap-2 cursor-pointer"

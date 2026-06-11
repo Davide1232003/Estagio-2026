@@ -1,0 +1,100 @@
+/* Container Geral */
+.calendar-container {
+  --fc-border-color: rgba(255, 255, 255, 0.05);
+  --fc-page-bg-color: transparent;
+  --fc-neutral-bg-color: rgba(255, 255, 255, 0.02);
+  --fc-list-event-hover-bg-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+/* Cabeçalho e Botões */
+.fc .fc-toolbar-title {
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.fc .fc-button-primary {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: rgba(249, 115, 22, 0.2) !important;
+  border-color: #f97316 !important;
+}
+
+/* Dias e Células */
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border: 1px solid rgba(10, 30, 130, 0.08);
+}
+
+.fc .fc-daygrid-day-number {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  padding: 8px;
+}
+
+/* Reduz a largura da pílula do evento, centra-a no dia e adiciona altura */
+.fc .fc-daygrid-event {
+  display: flex !important; /* Ativa o flexbox para podermos alinhar o texto ao centro */
+  align-items: center !important; /* Centra o texto verticalmente dentro da nova altura */
+  justify-content: center !important; /* Centra o texto horizontalmente */
+
+  height: 28px !important; /* 💡 Define a nova altura da pílula (podes aumentar para 32px se quiseres maior) */
+
+  width: max-content !important; /* Faz o retângulo moldar-se ao tamanho do texto */
+  min-width: 60px !important; /* Garante um tamanho mínimo estético */
+  max-width: 95% !important; /* Impede que cole às bordas do quadrado do dia */
+  margin-left: auto !important; /* Centra o bloco horizontalmente */
+  margin-right: auto !important; /* Centra o bloco horizontalmente */
+  padding-left: 10px !important; /* Ligeiramente aumentado para acompanhar a nova altura */
+  padding-right: 10px !important; /* Ligeiramente aumentado para acompanhar a nova altura */
+  border-radius: 8px !important; /* Borda arredondada */
+}
+
+.fc .fc-col-header-cell-cushion {
+  color: #94a3b8;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+/* --- ALTERAÇÕES SOLICITADAS ABAIXO --- */
+
+/* Eventos (Atividades) - Ajustado para o estilo da foto */
+.fc-event {
+  border-radius: 4px !important;
+  padding: 2px 4px !important;
+  font-size: 0.7rem !important;
+  font-weight: bold !important;
+
+  /* Borda lateral grossa como na foto */
+  border-left: none !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+
+  /* Retirar qualquer sombra */
+  box-shadow: none !important;
+
+  color: #94a3b8 !important;
+  text-align: center !important;
+}
+
+/* Remover sombreamento do dia de hoje */
+.fc .fc-day-today {
+  background: rgba(255, 255, 255, 0.05) !important; /* Apenas um fundo leve */
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Esconder scrollbars se necessário */
+.fc-scroller {
+  overflow: hidden !important;
+}
