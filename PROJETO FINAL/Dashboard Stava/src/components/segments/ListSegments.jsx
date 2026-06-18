@@ -1,110 +1,86 @@
-import { Mountain, Ruler, TrendingUp, Calendar } from "lucide-react";
-import { formatDate, formatTime } from "../../utils/conversions";
+import { Footprints, Bike, Trophy } from "lucide-react";
+import { formatTime } from "../../utils/formatting";
 
-function SegmentsList({ segment }) {
-  const pr = segment.athlete_pr_effort;
-  const stats = segment.athlete_segment_stats;
+function TrophyIcon({ rank }) {
+  if (!rank) return null;
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-[1.01] transition-all duration-300 group">
-      {/* Header */}
-      <div className="p-6 border-b border-white/5">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <h3 className="text-l font-black text-white italic uppercase tracking-tight truncate">
-              {segment.name}
-            </h3>
-            {segment.city && (
-              <p className="text-xs text-slate-500 mt-1">
-                {segment.city}
-                {segment.state ? `, ${segment.state}` : ""}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Características */}
-      <div className="p-6 grid grid-cols-3 gap-4 border-b border-white/5">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 text-slate-500">
-            <Ruler size={12} />
-            <span className="text-[10px] font-black uppercase tracking-wider">
-              Dist
-            </span>
-          </div>
-          <p className="text-sm font-bold text-white">
-            {segment.distance
-              ? `${(segment.distance / 1000).toFixed(2)} km`
-              : "--"}
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 text-slate-500">
-            <TrendingUp size={12} />
-            <span className="text-[10px] font-black uppercase tracking-wider">
-              Incl
-            </span>
-          </div>
-          <p className="text-sm font-bold text-white">
-            {segment.average_grade != null
-              ? `${segment.average_grade.toFixed(1)}%`
-              : "--"}
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 text-slate-500">
-            <Mountain size={12} />
-            <span className="text-[10px] font-black uppercase tracking-wider">
-              Elev
-            </span>
-          </div>
-          <p className="text-sm font-bold text-white">
-            {segment.total_elevation_gain != null
-              ? `${Math.round(segment.total_elevation_gain)} m`
-              : "--"}
-          </p>
-        </div>
-      </div>
-
-      {/* Stats pessoais */}
-      <div className="p-6 space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wide text-slate-400">
-            Melhor Tempo
-          </span>
-          <p className="text-lg text-white italic">
-            {pr ? formatTime(pr.elapsed_time) : "--"}
-          </p>
-        </div>
-
-        {pr?.start_date && (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-slate-400">
-              <Calendar size={14} className="text-blue-400" />
-              <span className="text-xs font-bold uppercase tracking-wide">
-                Data do PR
-              </span>
-            </div>
-            <p className="text-xs text-white font-medium">
-              {formatDate(pr.start_date)}
-            </p>
-          </div>
-        )}
-
-        {stats?.effort_count != null && (
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wide text-slate-400">
-              Tentativas
-            </span>
-            <p className="text-xs text-white font-medium">
-              {stats.effort_count}x
-            </p>
-          </div>
-        )}
-      </div>
+    <div className="flex items-center gap-1 text-slate-400">
+      <Trophy size={14} />
+      <span className="text-xs font-black">#{rank}</span>
     </div>
   );
 }
 
-export default SegmentsList;
+function ListSegments({ segments }) {
+  if (segments.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 gap-4">
+        <p className="text-slate-500 italic text-center">
+          Nenhum segmento encontrado nas últimas 10 atividades.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+      {/* Cabeçalho */}
+      <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/5">
+        <p className="col-span-1 text-[10px] font-black uppercase tracking-widest text-slate-500">
+          Tipo
+        </p>
+        <p className="col-span-4 text-[10px] font-black uppercase tracking-widest text-slate-500">
+          Nome
+        </p>
+        <p className="col-span-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+          Distância
+        </p>
+        <p className="col-span-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+          Elevação
+        </p>
+        <p className="col-span-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+          Tempo
+        </p>
+        <p className="col-span-1 text-[10px] font-black uppercase tracking-widest text-slate-500">
+          PR
+        </p>
+      </div>
+
+      {/* Linhas */}
+      {segments.map((seg, index) => (
+        <div
+          key={`${seg.id}-${index}`}
+          className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 hover:bg-white/5 transition-colors items-center"
+        >
+          <div className="col-span-1 text-slate-400">
+            {seg.activity_type === "Run" ? (
+              <Footprints size={16} />
+            ) : (
+              <Bike size={16} />
+            )}
+          </div>
+          <p className="col-span-4 text-sm font-medium text-orange-400 truncate">
+            {seg.name}
+          </p>
+          <p className="col-span-2 text-sm text-white">
+            {seg.distance ? `${(seg.distance / 1000).toFixed(2)} km` : "--"}
+          </p>
+          <p className="col-span-2 text-sm text-white">
+            {seg.total_elevation_gain != null
+              ? `${Math.round(Math.abs(seg.total_elevation_gain))} m`
+              : "--"}
+          </p>
+          <p className="col-span-2 text-sm font-bold text-white italic">
+            {formatTime(seg.elapsed_time)}
+          </p>
+          <div className="col-span-1">
+            <TrophyIcon rank={seg.pr_rank} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default ListSegments;

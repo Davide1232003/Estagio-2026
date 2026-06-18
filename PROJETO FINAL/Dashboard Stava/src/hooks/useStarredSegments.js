@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const useStarredSegments = () => {
+import { getToken } from "../utils/stravaClient";
+
+// Atividades externas evitam pedido duplicado
+export const useStarredSegments = (activities = []) => {
   const [starred, setStarred] = useState([]);
   const [performed, setPerformed] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAll = async () => {
-      const token = localStorage.getItem("strava_token");
+      const token = getToken();
       if (!token) return;
 
       try {
-        // 1. Segmentos favoritos + detalhes
+        // Segmentos favoritos + detalhes
         const starredRes = await axios.get(
           "https://www.strava.com/api/v3/segments/starred",
           {
@@ -35,19 +38,11 @@ export const useStarredSegments = () => {
           }),
         );
 
-        setStarred(detailedStarred);
+        setStarred(detailedStarred.filter(Boolean));
 
-        // 2. Últimas 10 atividades com detalhe para extrair segment_efforts
-        const activitiesRes = await axios.get(
-          "https://www.strava.com/api/v3/athlete/activities",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-            params: { per_page: 10 },
-          },
-        );
-
+        // Usa todas as atividades já carregadas
         const detailedActivities = await Promise.all(
-          activitiesRes.data.map(async (act) => {
+          activities.map(async (act) => {
             try {
               const res = await axios.get(
                 `https://www.strava.com/api/v3/activities/${act.id}`,
@@ -60,7 +55,7 @@ export const useStarredSegments = () => {
           }),
         );
 
-        // 3. Extrair segmentos únicos realizados
+        // Extrair segmentos únicos realizados
         const segmentMap = {};
         detailedActivities.forEach((act) => {
           if (!act || !act.segment_efforts) return;
@@ -93,8 +88,9 @@ export const useStarredSegments = () => {
       }
     };
 
-    fetchAll();
-  }, []);
+    // Aguarda atividades antes de executar
+    if (activities.length > 0) fetchAll();
+  }, [activities]); // Re-executa quando atividades chegam
 
   return { starred, performed, loading };
 };

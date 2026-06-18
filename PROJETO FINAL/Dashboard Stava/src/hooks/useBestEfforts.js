@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { isRunActivity } from "../utils/activityType";
 
 const DISTANCES = [
   { label: "1 KM", meters: 1000 },
@@ -13,19 +14,14 @@ export const useBestEfforts = (activities) => {
   const records = useMemo(() => {
     if (!activities || activities.length === 0) return [];
 
-    const runs = activities.filter(
-      (a) => a.type === "Run" || a.sport_type === "Run",
-    );
+    const runs = activities.filter(isRunActivity);
 
     return DISTANCES.map((dist) => {
-      // Apenas atividades que cobrem a distância alvo (até 20% acima evita
-      // usar o pace de uma maratona para estimar um 1km)
       const upperBound = dist.meters * 1.2;
       const candidates = runs.filter(
         (a) => a.distance >= dist.meters && a.distance <= upperBound,
       );
 
-      // Se não houver candidatos próximos, aceita qualquer atividade suficientemente longa
       const pool =
         candidates.length > 0
           ? candidates
@@ -42,6 +38,7 @@ export const useBestEfforts = (activities) => {
         return paceCurr < pacePrev ? curr : prev;
       });
 
+      // Estimativa de tempo para a distância exata com base no pace da atividade
       const pace = best.moving_time / best.distance;
       const estimatedTime = Math.round(pace * dist.meters);
 

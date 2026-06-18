@@ -93,7 +93,6 @@ function Sidebar() {
 
   return (
     <aside className="w-66 bg-transparent border-r border-white/10 flex flex-col h-full py-6">
-      {/* Logo Area */}
       <div className="px-8 mb-13">
         <h2 className="text-white text-3xl font-bold tracking-tight">
           STRAVA <span className="text-orange-500 font-light">DASH</span>

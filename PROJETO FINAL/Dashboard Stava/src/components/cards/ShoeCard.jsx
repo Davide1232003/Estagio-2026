@@ -39,7 +39,6 @@ function ShoeCard({ shoe, isBike = false }) {
 
   return (
     <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div>

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   AreaChart,
   Area,
@@ -17,7 +16,8 @@ import {
   Legend,
 } from "recharts";
 
-import { formatPaceLabel } from "../../utils/conversions";
+import { formatPaceLabel } from "../../utils/pace";
+import { isRunActivity, isRideActivity } from "../../utils/activityType";
 
 function VolumeAnalytics({ activities = [] }) {
   // Filtra as atividades para os gráficos
@@ -39,14 +39,9 @@ function VolumeAnalytics({ activities = [] }) {
   const totalKm = processedData
     .reduce((acc, c) => acc + c.Distância, 0)
     .toFixed(1);
-  const avgPace = processedData.length
-    ? (
-        processedData.reduce((acc, c) => acc + c.Pace, 0) / processedData.length
-      ).toFixed(2)
-    : "0.00";
 
-  const totalRun = activities.filter((a) => a.type === "Run").length;
-  const totalRide = activities.filter((a) => a.type === "Ride").length;
+  const totalRun = activities.filter(isRunActivity).length;
+  const totalRide = activities.filter(isRideActivity).length;
 
   const pieData = [
     { name: "Corrida", value: totalRun },
@@ -64,7 +59,7 @@ function VolumeAnalytics({ activities = [] }) {
 
   return (
     <div className="grid grid-cols-1 mt-15 gap-20 pb-12">
-      {/* GRÁFICO 1: CARGA DE TREINO (BARRAS) */}
+      {/* Carga de treino */}
       <div className=" space-y-8">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -109,13 +104,13 @@ function VolumeAnalytics({ activities = [] }) {
                   fontSize: "12px",
                 }}
                 labelStyle={{
-                  color: "#ffffff", // Data do treino sempre a branco
+                  color: "#ffffff",
                   fontWeight: "bold",
                   marginBottom: "6px",
                 }}
                 itemStyle={{
                   fontWeight: "600",
-                  color: "#94a3b8", // Texto em text-slate-400
+                  color: "#94a3b8",
                 }}
                 formatter={(val) => [`${val} km`, "Volume Total"]}
               />
@@ -142,7 +137,7 @@ function VolumeAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* GRÁFICO 2: EVOLUÇÃO DE VOLUME */}
+      {/* Evolução de Volume */}
       <div className="space-y-8">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -199,11 +194,10 @@ function VolumeAnalytics({ activities = [] }) {
                 }}
                 itemStyle={{
                   fontWeight: "600",
-                  color: "#94a3b8", // Texto em text-slate-400
+                  color: "#94a3b8",
                 }}
                 formatter={(val, name) => {
                   if (name === "Ritmo" || name === "Pace") {
-                    // Caso a tua função coloque o "/km" extra, limpamos aqui também
                     const paceLimpo = formatPaceLabel(val)
                       .replace("/km", "")
                       .trim();
@@ -236,7 +230,7 @@ function VolumeAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* GRÁFICO 3: DISPERSÃO */}
+      {/* Dispersão */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">

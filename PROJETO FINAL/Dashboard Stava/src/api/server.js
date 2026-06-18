@@ -49,4 +49,4 @@ app.get("/exchange_token", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Servidor Auth ativo na porta 3000"));
+app.listen(3000, () => console.log("Servidor ativo na porta 3000"));

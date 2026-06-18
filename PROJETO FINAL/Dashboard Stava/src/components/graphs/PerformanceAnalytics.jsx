@@ -9,7 +9,7 @@ import {
   ScatterChart,
   Scatter,
 } from "recharts";
-import { formatPace, formatPaceLabel } from "../../utils/conversions";
+import { formatPace, formatPaceLabel } from "../../utils/pace";
 import MetricsCard from "../cards/MetricsCard";
 
 function PerformanceAnalytics({ activities = [] }) {
@@ -51,7 +51,7 @@ function PerformanceAnalytics({ activities = [] }) {
 
   return (
     <div className="grid grid-cols-1 gap-8 pb-12">
-      {/* Gráfico 1: Evolução do Pace */}
+      {/* Evolução do Pace */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -133,12 +133,12 @@ function PerformanceAnalytics({ activities = [] }) {
           <strong className="text-sm">{formatPaceLabel(avgPace)}</strong>. Uma
           tendência descendente na curva indica melhoria de performance, estás a
           correr mais rápido com o mesmo esforço.
-          <br />O teu melhor pace registadofoi de{" "}
+          <br />O teu melhor pace registado foi de{" "}
           <strong className="text-sm">{formatPaceLabel(bestPace)}</strong>.
         </div>
       </div>
 
-      {/* Gráfico 2: Evolução da FC média */}
+      {/* Evolução da FC média */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -224,7 +224,7 @@ function PerformanceAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* Grafico 3: Distruição de Pace vs FC */}
+      {/* Distruição de Pace vs FC */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -314,7 +314,7 @@ function PerformanceAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* Card 4: Resumo de Performance */}
+      {/* Resumo de Performance */}
       <MetricsCard
         title="Resumo de Performance"
         items={[

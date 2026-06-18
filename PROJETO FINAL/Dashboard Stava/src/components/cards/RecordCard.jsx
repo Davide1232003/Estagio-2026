@@ -1,5 +1,5 @@
 import { Calendar, Activity } from "lucide-react";
-import { formatDate, formatTime } from "../../utils/conversions";
+import { formatDate, formatTime } from "../../utils/formatting";
 
 function RecordCard({ label, meters, record }) {
   return (

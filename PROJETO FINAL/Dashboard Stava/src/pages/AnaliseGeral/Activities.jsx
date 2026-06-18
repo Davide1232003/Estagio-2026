@@ -7,6 +7,7 @@ import ActivityItem from "../../components/activity/ActivityItem";
 import ActivityDetail from "../../components/activity/ActivityDetail";
 import Loading from "../../components/Loading";
 import { useStravaActivities } from "../../hooks/useStravaActivities";
+import { useActivityDetail } from "../../hooks/useActivityDetail";
 
 function Activities() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,10 +15,14 @@ function Activities() {
   const [sportFilter, setSportFilter] = useState("Run");
 
   const { activities, loading } = useStravaActivities();
+  const { activityDetail } = useActivityDetail(selectedActivity);
 
   // filtragem prévia baseada no desporto selecionado
-  const filteredActivities = activities.filter((a) => a.type === sportFilter);
+  const filteredActivities = activities.filter(
+    (a) => a.type === sportFilter || a.sport_type === sportFilter,
+  );
 
+  // Atualiza a atividade selecionada com base nos parâmetros da URL
   useEffect(() => {
     if (loading || activities.length === 0) return;
 
@@ -29,8 +34,8 @@ function Activities() {
         if (selectedActivity?.id !== found.id) {
           setSelectedActivity(found);
         }
-        if (found.type !== sportFilter) {
-          setSportFilter(found.type);
+        if (found.type !== sportFilter && found.sport_type !== sportFilter) {
+          setSportFilter(found.sport_type || found.type);
         }
         return;
       }
@@ -53,13 +58,14 @@ function Activities() {
     }
   }, [activities, searchParams, sportFilter, loading]);
 
-  // Handlers orientados à execução
   const handleSportChange = (newSport) => {
     if (newSport === sportFilter) return;
 
-    setSportFilter(newSport);
-    const nextFiltered = activities.filter((a) => a.type === newSport);
+    const nextFiltered = activities.filter(
+      (a) => a.type === newSport || a.sport_type === newSport,
+    );
 
+    setSportFilter(newSport);
     if (nextFiltered.length > 0) {
       setSelectedActivity(nextFiltered[0]);
       setSearchParams({ id: nextFiltered[0].id });
@@ -74,7 +80,7 @@ function Activities() {
   return (
     <div className="bg-white/1 backdrop-blur-[15px] border border-white/20 rounded-xl p-6 h-[calc(100vh-140px)] overflow-hidden animate-in fade-in duration-500">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
-        {/* COLUNA ESQUERDA: Lista */}
+        {/* Lista */}
         <div className="lg:col-span-4 flex flex-col h-full border-r border-white/5 pr-4 overflow-hidden">
           <div className="flex justify-center mb-6 shrink-0">
             <Menu
@@ -87,7 +93,6 @@ function Activities() {
               }
             />
           </div>
-
           <div className="flex-1 overflow-y-auto pr-2 space-y-3 custom-scrollbar">
             {filteredActivities.length > 0 ? (
               filteredActivities.map((act) => (
@@ -111,9 +116,9 @@ function Activities() {
           </div>
         </div>
 
-        {/* COLUNA DIREITA: Detalhes */}
+        {/* Detalhes */}
         <div className="lg:col-span-8 h-full overflow-y-auto pr-2 custom-scrollbar">
-          <ActivityDetail activity={selectedActivity} />
+          <ActivityDetail activity={activityDetail} />
         </div>
       </div>
     </div>

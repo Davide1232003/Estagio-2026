@@ -1,13 +1,14 @@
 import { Bike, Footprints } from "lucide-react";
+import { isRunActivity } from "../../utils/activityType";
 import {
   formatDistance,
   formatDate,
   formatHours,
   formatElevation,
-} from "../../utils/conversions";
+} from "../../utils/formatting";
 
 function ActivityItem({ activity, onClick, compact = false }) {
-  const isRun = activity.type === "Run" || activity.sport_type === "Run";
+  const isRun = isRunActivity(activity);
 
   const hoverBgClass = isRun
     ? "group-hover:bg-orange-500/10"

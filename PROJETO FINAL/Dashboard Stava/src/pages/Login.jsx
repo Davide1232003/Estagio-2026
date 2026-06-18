@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { getToken } from "../utils/stravaClient";
+
 import fundo from "../assets/fundo.jpg";
 
 function Login() {
@@ -14,7 +17,7 @@ function Login() {
 
   // caso já exista o token, redireciona para o dashboard
   useEffect(() => {
-    const token = localStorage.getItem("strava_token");
+    const token = getToken();
     if (token) {
       navigate("/dashboard");
     }
@@ -32,7 +35,7 @@ function Login() {
       </div>
 
       <div className="relative z-10 w-full max-w-md px-6">
-        <div className="bg-white/[0.02] backdrop-blur-[20px] border border-white/10 rounded-[30px] p-10 shadow-2xl">
+        <div className="bg-white/2 backdrop-blur-[20px] border border-white/10 rounded-[30px] p-10 shadow-2xl">
           <div className="text-center mb-8  ">
             <h2 className="text-white text-3xl font-bold tracking-tight">
               STRAVA <span className="text-orange-500 font-light">DASH</span>

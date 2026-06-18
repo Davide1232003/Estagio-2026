@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BarChart,
   Bar,
@@ -75,7 +74,7 @@ function ElevationAnalytics({ activities = [] }) {
 
   return (
     <div className="grid grid-cols-1 gap-8 pb-12">
-      {/* Gráfico 1: Desnível positivo por sessão */}
+      {/* Ganho de Altimetria por atividade */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -155,7 +154,7 @@ function ElevationAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* Gráfico 2: Perfil Contínuo de Desnível */}
+      {/* Perfil Contínuo de Desnível */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -240,7 +239,7 @@ function ElevationAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* Gráfico 3: Perfil de Terreno do Atleta */}
+      {/* Perfil de terreno do atleta */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4 flex flex-col justify-between">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -301,7 +300,7 @@ function ElevationAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* Card 4: Estatísticas */}
+      {/* Estatísticas */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-15 flex flex-col justify-between">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">

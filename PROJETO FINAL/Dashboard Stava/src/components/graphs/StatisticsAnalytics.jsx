@@ -68,6 +68,10 @@ function StatisticsAnalytics({ activities = [] }) {
     label: bucket.label,
     count: activities.filter((act) => {
       const hour = new Date(act.start_date_local || act.start_date).getHours();
+      if (bucket.min > bucket.max) {
+        // bucket atravessa meia-noite (ex: 21h-06h)
+        return hour >= bucket.min || hour < bucket.max;
+      }
       return hour >= bucket.min && hour < bucket.max;
     }).length,
   }));
@@ -104,7 +108,7 @@ function StatisticsAnalytics({ activities = [] }) {
 
   return (
     <div className="grid grid-cols-1 gap-8 pb-12">
-      {/* Gráfico 1: Distribuição de Distâncias */}
+      {/* Distribuição de Distâncias */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -181,7 +185,7 @@ function StatisticsAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* Gráfico 2: Distribuição de Paces */}
+      {/* Distribuição de paces */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -259,7 +263,7 @@ function StatisticsAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* Gráfico 3: Distribuição por Hora do Dia */}
+      {/* Distribuição por hora do dia */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">
@@ -335,7 +339,7 @@ function StatisticsAnalytics({ activities = [] }) {
         </div>
       </div>
 
-      {/* Gráfico 4: Atividades por Mês */}
+      {/* Atividades por mês */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
         <div>
           <h3 className="text-sm font-black text-white italic uppercase tracking-wider">

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import {
   LineChart,
   Line,
@@ -12,10 +12,10 @@ import { Target, ArrowRight } from "lucide-react";
 
 function GoalsWidget({ activities = [] }) {
   const [targetKm, setTargetKm] = useState("");
-  const [confirmedGoal, setConfirmedGoal] = useState(null); // Começa a null (linhas zeradas)
+  const [confirmedGoal, setConfirmedGoal] = useState(null);
   const [period, setPeriod] = useState("month");
 
-  // 1. Processamento dos dados para o Gráfico
+  // Processamento dos dados para o Gráfico
   const chartData = useMemo(() => {
     const agora = new Date();
     const anoAtual = agora.getFullYear();
@@ -42,7 +42,7 @@ function GoalsWidget({ activities = [] }) {
           );
         });
 
-        // 💡 CONVERSÃO: O Strava envia em metros. Dividimos por 1000 para somar em KM
+        // Dividir por 1000 para somar em KM
         const kmDoDia = treinosDoDia.reduce(
           (acc, curr) => acc + curr.distance / 1000,
           0,
@@ -102,6 +102,7 @@ function GoalsWidget({ activities = [] }) {
     }
   }, [activities, confirmedGoal, period]);
 
+  // Manipulador para definir a meta quando o formulário é submetido
   const handleSetGoal = (e) => {
     e.preventDefault();
     const val = parseFloat(targetKm);
@@ -110,17 +111,15 @@ function GoalsWidget({ activities = [] }) {
 
   return (
     <div className="bg-white/5 border border-white/10 p-6 rounded-xl text-white">
-      {/* Topo do Widget: Título à esquerda, Input/Controlos à direita */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4 mb-6">
-        {/* Título Alinhado com o teu estilo */}
         <p className="flex items-center gap-2 text-lg font-black text-white italic leading-none uppercase truncate">
           Meta
         </p>
 
-        {/* Zona Dinâmica no Canto Superior Direito */}
+        {/* Zona dinâmica no canto superior direito */}
         <div className="flex items-center gap-3">
           {!confirmedGoal ? (
-            /* Formulário Minimalista no Canto Superior Direito */
+            /* Formulário */
             <form onSubmit={handleSetGoal} className="flex items-center gap-2">
               <input
                 type="number"
@@ -194,10 +193,9 @@ function GoalsWidget({ activities = [] }) {
         </p>
       </div>
 
-      {/* Área do Gráfico (Sempre Visível) */}
+      {/* Área do gráfico */}
       <div className="h-55 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          {/* 🚀 ALTERADO: Adicionado 'accessibilityLayer' para o gráfico detetar o rato continuamente */}
           <LineChart
             data={chartData}
             margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
@@ -214,13 +212,10 @@ function GoalsWidget({ activities = [] }) {
               tickLine={false}
             />
             <YAxis stroke="#475569" fontSize={10} tickLine={false} unit="km" />
-
-            {/* 🚀 ALTERADO: Configuração do Tooltip para seguir o movimento do cursor */}
             <Tooltip
-              trigger="hover" /* Faz o tooltip atualizar a cada pixel movido */
+              trigger="hover"
               cursor={{
-                stroke:
-                  "rgba(255, 255, 255, 0.08)" /* Desenha a linha vertical guia que acompanha o rato */,
+                stroke: "rgba(255, 255, 255, 0.08)",
                 strokeDasharray: "3 3",
               }}
               contentStyle={{
@@ -241,7 +236,7 @@ function GoalsWidget({ activities = [] }) {
               formatter={(value, name) => [`${value} km`, name]}
             />
 
-            {/* Linha Alvo */}
+            {/* Linha alvo */}
             <Line
               type="monotone"
               dataKey="Meta"
@@ -252,14 +247,13 @@ function GoalsWidget({ activities = [] }) {
               activeDot={false}
             />
 
-            {/* Linha Real */}
+            {/* Linha real */}
             <Line
               type="monotone"
               dataKey="Progresso Real"
               stroke="#f97316"
               strokeWidth={confirmedGoal ? 3 : 0}
               dot={false}
-              /* 🚀 ADICIONADO: 'activeDot' faz com que o ponto laranja nasça e deslize dinamicamente apenas onde o rato está por cima */
               activeDot={{
                 r: 5,
                 stroke: "#f97316",

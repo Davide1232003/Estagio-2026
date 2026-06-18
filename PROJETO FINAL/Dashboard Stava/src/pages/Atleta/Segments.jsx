@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useStarredSegments } from "../../hooks/useStarredSegments";
+import { useStravaActivities } from "../../hooks/useStravaActivities";
 
 import Loading from "../../components/Loading";
 import Menu from "../../components/Menu";
-import ListSegments from "../../components/segments/ListSegments";
-import FavoriteSegments from "../../components/segments/FavoriteSegments";
+import ListSegments from "../../components/segments/FavoriteSegments";
+import FavoriteSegments from "../../components/segments/ListSegments";
 
 import { Star } from "lucide-react";
 
@@ -14,15 +15,17 @@ const sectionOptions = [
 ];
 
 function Segments() {
-  const { starred, performed, loading } = useStarredSegments();
+  const { activities, loading: activitiesLoading } = useStravaActivities();
+  // Passa atividades para evitar pedido extra
+  const { starred, performed, loading } = useStarredSegments(activities);
   const [activeSection, setActiveSection] = useState("performed");
 
-  if (loading) return <Loading message="A carregar..." />;
+  // Aguarda os dois hooks
+  if (activitiesLoading || loading) return <Loading message="A carregar..." />;
 
   return (
     <div className="bg-white/1 backdrop-blur-[15px] border border-white/20 rounded-xl p-8 min-h-[calc(100vh-140px)] animate-in fade-in duration-500">
       <div className="max-w-6xl mx-auto space-y-8">
-        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-8">
           <div>
             <h1 className="text-3xl font-black text-white italic uppercase tracking-tighter">
@@ -44,11 +47,10 @@ function Segments() {
           />
         </div>
 
-        {/* Conteúdo */}
+        {/* Segmentos (Lista e Favoritos) */}
         {activeSection === "starred" ? (
           starred.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
-              <Star size={48} className="text-slate-700" />
               <p className="text-slate-500 italic text-center">
                 Não tens segmentos favoritos na Strava.
               </p>

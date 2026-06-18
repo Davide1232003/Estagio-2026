@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useStravaActivities } from "../../hooks/useStravaActivities";
 import { useFilteredActivities } from "../../hooks/useFilteredActivities";
 import FilterBar from "../../components/FilterBar";
@@ -26,7 +26,6 @@ function ElevationPage() {
             Análise de ganho vertical
           </p>
         </div>
-
         <FilterBar
           sport={sportFilter}
           setSport={setSportFilter}
@@ -34,7 +33,6 @@ function ElevationPage() {
           setTime={setFilter}
         />
       </div>
-
       <ElevationAnalytics activities={filteredActivities} />
     </div>
   );

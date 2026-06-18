@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import { getToken } from "../utils/stravaClient";
+
 export const useStravaActivities = () => {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -8,12 +10,11 @@ export const useStravaActivities = () => {
 
   useEffect(() => {
     const fetchAllActivities = async () => {
-      const token = localStorage.getItem("strava_token");
+      const token = getToken();
       if (!token) {
         setLoading(false);
         return;
       }
-
       try {
         let allActivities = [];
         let currentPage = 1;

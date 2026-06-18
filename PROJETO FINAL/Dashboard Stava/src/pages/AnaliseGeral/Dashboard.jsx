@@ -21,15 +21,15 @@ import { timeOptions, sportOptions } from "../../config/menuOptions";
 import { useStravaActivities } from "../../hooks/useStravaActivities";
 import { useDashboardStats } from "../../hooks/useDashboardStats";
 
+import { setToken } from "../../utils/stravaClient";
 import {
   formatDistance,
   formatHours,
   formatElevation,
-  calculatePeriodPace,
-  calculatePaceTrend,
-  getTop3Records,
   formatSpeed,
-} from "../../utils/conversions";
+} from "../../utils/formatting";
+import { calculatePeriodPace, calculatePaceTrend } from "../../utils/pace";
+import { getTop3Records } from "../../utils/stats";
 
 function Dashboard() {
   const [searchParams] = useSearchParams();
@@ -41,7 +41,7 @@ function Dashboard() {
   // Guarda o token imediatamente antes de qualquer fetch
   const tokenUrl = searchParams.get("token");
   if (tokenUrl) {
-    localStorage.setItem("strava_token", tokenUrl);
+    setToken(tokenUrl);
     window.history.replaceState({}, document.title, "/dashboard");
   }
 
@@ -148,7 +148,7 @@ function Dashboard() {
   return (
     <div className="bg-white/1 backdrop-blur-[15px] border border-white/20 rounded-xl p-8 min-h-[calc(100vh-140px)] shadow-2xl animate-in fade-in duration-500 overflow-x-hidden">
       <div className="space-y-12">
-        {/* Filtros */}
+        {/* Menus com filtros */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <Menu
             options={sportOptions}
@@ -168,7 +168,7 @@ function Dashboard() {
           />
         </div>
 
-        {/* StatCards */}
+        {/* StatCards com Estatísticas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
           {stats.map((stat, index) => (
             <StatCard
@@ -188,17 +188,15 @@ function Dashboard() {
         </div>
 
         {/* Gráfico de Metas */}
-        <div className="mt-6">
-          <GoalsWidget activities={activities} />
-        </div>
+        <GoalsWidget activities={activities} />
 
         {/* Últimas Atividades */}
-        <div className="p-6 rounded-xl w-full">
+        <div className="w-full">
           <h3 className="text-lg font-black text-white italic leading-none uppercase truncate mb-6">
             Últimas Atividades
           </h3>
 
-          {/* Renderização direta e limpa sem scroll horizontal interno */}
+          {/* Lista de Atividades */}
           <div className="space-y-3 pb-2">
             {currentFiltered.slice(0, 5).map((activity) => (
               <ActivityItem
@@ -209,7 +207,7 @@ function Dashboard() {
             ))}
           </div>
 
-          {/* Botão de Ver Mais */}
+          {/* Botão Ver + */}
           <button
             onClick={() => navigate("/atividades")}
             className="mx-auto mt-4 flex items-center justify-center cursor-pointer w-full group"

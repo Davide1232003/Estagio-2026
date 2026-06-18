@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useStravaActivities } from "../../hooks/useStravaActivities";
 import { useFilteredActivities } from "../../hooks/useFilteredActivities";
 import FilterBar from "../../components/FilterBar";
@@ -33,7 +33,6 @@ function StatisticsPage() {
           setTime={setFilter}
         />
       </div>
-
       <StatisticsAnalytics activities={filteredActivities} />
     </div>
   );

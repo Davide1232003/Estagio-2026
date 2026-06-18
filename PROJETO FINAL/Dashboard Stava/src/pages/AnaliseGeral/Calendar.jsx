@@ -12,20 +12,37 @@ import {
   TrendingUp,
   Award,
   PieChart,
-  ChevronDown,
 } from "lucide-react";
 
 import Loading from "../../components/Loading";
 import StatCard from "../../components/cards/StatCard";
 import Menu from "../../components/Menu";
+import Dropdown from "../../components/Dropdown";
 import { useStravaActivities } from "../../hooks/useStravaActivities";
 import { sportOptions } from "../../config/menuOptions";
+import { isRunActivity, isRideActivity } from "../../utils/activityType";
 import {
   formatDistance,
   formatHours,
   formatElevation,
-} from "../../utils/conversions";
+} from "../../utils/formatting";
 import "../../styles/calendarCustom.css";
+
+const MESES = [
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
+];
+const ANOS = [2028, 2027, 2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019];
 
 function Calendar() {
   const [events, setEvents] = useState([]);
@@ -47,37 +64,22 @@ function Calendar() {
   const navigate = useNavigate();
   const { activities, loading } = useStravaActivities();
 
-  const meses = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
-  const anos = [2026, 2025, 2024, 2023, 2022, 2021, 2020];
-
   // Transformar atividades em eventos com filtro aplicado
   useEffect(() => {
     if (activities.length === 0) return;
 
     const formattedEvents = activities
-      .filter((act) => act.type === sportFilter)
+      .filter(
+        (act) => act.type === sportFilter || act.sport_type === sportFilter,
+      )
       .map((act) => ({
         id: act.id,
         title: `${(act.distance / 1000).toFixed(1)} km`,
         start: act.start_date_local.split("T")[0],
-        backgroundColor:
-          act.type === "Run"
-            ? "rgba(249, 115, 22, 0.2)"
-            : "rgba(59, 130, 246, 0.2)",
-        borderColor: act.type === "Run" ? "#f97316" : "#3b82f6",
+        backgroundColor: isRunActivity(act)
+          ? "rgba(249, 115, 22, 0.2)"
+          : "rgba(59, 130, 246, 0.2)",
+        borderColor: isRunActivity(act) ? "#f97316" : "#3b82f6",
         textColor: "#fff",
         extendedProps: { type: act.type },
       }));
@@ -92,7 +94,7 @@ function Calendar() {
     }
   }, [sportFilter, activities]);
 
-  // 2. Controlar a navegação quando se escolhe um item na dropbox
+  // Controlar a navegação quando se escolhe um item na dropbox mês
   const handleMonthSelect = (monthIdx) => {
     setActiveMonth(monthIdx);
     setIsMonthOpen(false);
@@ -102,6 +104,7 @@ function Calendar() {
     );
   };
 
+  // Controlar a navegação quando se escolhe um item na dropbox ano
   const handleYearSelect = (yearVal) => {
     setActiveYear(yearVal);
     setIsYearOpen(false);
@@ -111,7 +114,7 @@ function Calendar() {
     );
   };
 
-  // 3. Processamento de Estatísticas do Mês
+  // Processamento de estatísticas do mês
   const handleDatesSet = (dateInfo) => {
     if (activities.length === 0) return;
 
@@ -131,10 +134,11 @@ function Calendar() {
       return (
         actDate.getMonth() === currentMonth &&
         actDate.getFullYear() === currentYear &&
-        act.type === sportFilter
+        (act.type === sportFilter || act.sport_type === sportFilter)
       );
     });
 
+    // Cálculo das estatísticas principais do mês
     const totalDist = filtered.reduce((acc, curr) => acc + curr.distance, 0);
     const totalTime = filtered.reduce((acc, curr) => acc + curr.moving_time, 0);
     const totalElev = filtered.reduce(
@@ -142,6 +146,7 @@ function Calendar() {
       0,
     );
 
+    // isto é o que preenche os 4 StatCards principais do mês
     setMonthlyStats([
       {
         title: `Treinos`,
@@ -169,7 +174,7 @@ function Calendar() {
       },
     ]);
 
-    // Métricas Gerais do Mês (Para a Secção de Baixo)
+    // Métricas Gerais do mês
     const allMonthActivities = activities.filter((act) => {
       const actDate = new Date(act.start_date_local);
       return (
@@ -178,9 +183,10 @@ function Calendar() {
       );
     });
 
-    const runs = allMonthActivities.filter((a) => a.type === "Run");
-    const rides = allMonthActivities.filter((a) => a.type === "Ride");
+    const runs = allMonthActivities.filter(isRunActivity);
+    const rides = allMonthActivities.filter(isRideActivity);
 
+    // Cálculo da percentagem de corridas e bike no mês
     const runPercent = allMonthActivities.length
       ? Math.round((runs.length / allMonthActivities.length) * 100)
       : 0;
@@ -188,8 +194,9 @@ function Calendar() {
       ? Math.round((rides.length / allMonthActivities.length) * 100)
       : 0;
 
+    // Cálculo do ritmo médio para atividades de corrida
     let avgPaceStr = "—";
-    if (runs.length > 0) {
+    if (sportFilter === "Run" && runs.length > 0) {
       const totalRunDistKM =
         runs.reduce((acc, curr) => acc + curr.distance, 0) / 1000;
       const totalRunTimeSec = runs.reduce(
@@ -204,8 +211,9 @@ function Calendar() {
       }
     }
 
+    // Cálculo da velocidade média para atividades de bike
     let avgRideSpeedStr = "—";
-    if (rides.length > 0) {
+    if (sportFilter === "Ride" && rides.length > 0) {
       const totalRideDistKM =
         rides.reduce((acc, curr) => acc + curr.distance, 0) / 1000;
       const totalRideTimeH =
@@ -215,6 +223,7 @@ function Calendar() {
       }
     }
 
+    // Cálculo da maior distância do mês considerando o filtro de desporto
     const longestActivity =
       filtered.length > 0
         ? [...filtered].sort((a, b) => b.distance - a.distance)[0]
@@ -223,6 +232,7 @@ function Calendar() {
       ? `${(longestActivity.distance / 1000).toFixed(1)} km`
       : "—";
 
+    // Atualizar o estado com as estatísticas avançadas do mês
     setAdvancedStats({
       runPercent,
       ridePercent,
@@ -236,7 +246,6 @@ function Calendar() {
 
   return (
     <div className="bg-white/1 backdrop-blur-[15px] border border-white/20 rounded-xl p-8 min-h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar space-y-8 shadow-2xl animate-in fade-in duration-500">
-      {/* 1. CABEÇALHO DO PAINEL */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-white/5 pb-6">
         <div className="space-y-2">
           <h1 className="text-2xl font-black text-white italic uppercase tracking-tighter flex items-center gap-2">
@@ -245,7 +254,7 @@ function Calendar() {
           </h1>
         </div>
 
-        {/* CONTROLO DE FILTROS INTEGRADOS */}
+        {/* Menu com Filtros */}
         <div className="flex flex-wrap items-center gap-3 relative z-50">
           <div className="scale-90 origin-right">
             <Menu
@@ -262,70 +271,29 @@ function Calendar() {
           <div className="w-px h-6 bg-white/10 hidden sm:block"></div>
 
           {/* Dropbox de Mês */}
-          <div className="relative">
-            <button
-              onClick={() => {
-                setIsMonthOpen(!isMonthOpen);
-                setIsYearOpen(false);
-              }}
-              className="bg-white/2 backdrop-blur-[20px] border border-white/10 text-white text-xs font-semibold uppercase tracking-wider px-4 py-2.5 rounded-xl flex items-center gap-2 hover:bg-white/5 transition-colors shadow-lg min-w-32.5 justify-between cursor-pointer"
-            >
-              {meses[activeMonth]}
-              <ChevronDown
-                size={14}
-                className={`text-slate-400 transition-transform ${isMonthOpen ? "transform rotate-180" : ""}`}
-              />
-            </button>
-
-            {isMonthOpen && (
-              <div className="absolute top-full mt-2 left-0 bg-slate-950/95 backdrop-blur-[20px] border border-white/10 rounded-xl w-40 max-h-60 overflow-y-auto p-1.5 shadow-2xl space-y-0.5 custom-scrollbar animate-in fade-in zoom-in-95 duration-100 ">
-                {meses.map((m, idx) => (
-                  <button
-                    key={m}
-                    onClick={() => handleMonthSelect(idx)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold uppercase transition-colors ${idx === activeMonth ? "bg-orange-500/20 text-white" : "text-slate-300 hover:bg-white/5"}`}
-                  >
-                    {m}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <Dropdown
+            label={MESES[activeMonth]}
+            options={MESES.map((m, idx) => ({ label: m, value: idx }))}
+            activeValue={activeMonth}
+            onSelect={handleMonthSelect}
+            isOpen={isMonthOpen}
+            onToggle={() => { setIsMonthOpen(!isMonthOpen); setIsYearOpen(false); }}
+          />
 
           {/* Dropbox de Ano */}
-          <div className="relative">
-            <button
-              onClick={() => {
-                setIsYearOpen(!isYearOpen);
-                setIsMonthOpen(false);
-              }}
-              className="bg-white/2 backdrop-blur-[20px] border border-white/10 text-white text-xs font-semibold  uppercase tracking-wider px-4 py-2.5 rounded-xl flex items-center gap-2 hover:bg-white/5 transition-colors shadow-lg min-w-22.5 justify-between cursor-pointer"
-            >
-              {activeYear}
-              <ChevronDown
-                size={14}
-                className={`text-slate-400 transition-transform ${isYearOpen ? "transform rotate-180" : ""}`}
-              />
-            </button>
-
-            {isYearOpen && (
-              <div className="absolute top-full mt-2 right-0 bg-slate-950/95 backdrop-blur-[20px] border border-white/10 rounded-xl w-28 p-1.5 shadow-2xl space-y-0.5 animate-in fade-in zoom-in-95 duration-100 ">
-                {anos.map((a) => (
-                  <button
-                    key={a}
-                    onClick={() => handleYearSelect(a)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold uppercase transition-colors ${a === activeYear ? "bg-blue-500/20 text-white" : "text-slate-300 hover:bg-white/5"}`}
-                  >
-                    {a}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <Dropdown
+            label={activeYear}
+            options={ANOS.map((a) => ({ label: a, value: a }))}
+            activeValue={activeYear}
+            onSelect={handleYearSelect}
+            isOpen={isYearOpen}
+            onToggle={() => { setIsYearOpen(!isYearOpen); setIsMonthOpen(false); }}
+            alignRight
+          />
         </div>
       </div>
 
-      {/* 2. CORE STATS */}
+      {/* Estatísticas Mensais */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {monthlyStats.map((stat, idx) => (
           <StatCard
@@ -339,7 +307,7 @@ function Calendar() {
         ))}
       </div>
 
-      {/* SEÇÃO DE ANÁLISE DE PERFORMANCE AVANÇADA */}
+      {/* Análise */}
       {advancedStats && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white/2 border border-white/5 rounded-2xl p-6">
           <div className="space-y-3 md:border-r border-white/5 pr-4">
@@ -381,7 +349,7 @@ function Calendar() {
 
           <div className="space-y-2 md:pl-4">
             <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-1.5">
-              Distuibuição do Desporto
+              Distribuição do Desporto
             </p>
             <div className="space-y-1.5 pt-1">
               <div className="flex justify-between text-[10px] text-white font-bold italic uppercase">
@@ -403,7 +371,7 @@ function Calendar() {
         </div>
       )}
 
-      {/* O CALENDÁRIO COMPACTO */}
+      {/* Calendário */}
       <div className="bg-white/5 border border-white/10 p-6 rounded-xl h-150">
         <div className="h-full calendar-container">
           <FullCalendar

@@ -18,60 +18,31 @@ import Segments from "../pages/Atleta/Segments";
 
 import Login from "../pages/Login";
 import Logout from "../pages/Logout";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
-  // o createBrowserRouter garante que a aplicação se comporte como uma SPA
   {
     path: "/",
     element: <Login />,
   },
   {
-    // O Layout envolve todas as rotas filhas (children)
-    element: <Layout />,
+    element: <ProtectedRoute />,
     children: [
       {
-        path: "/dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "/atividades",
-        element: <Activities />,
-      },
-      {
-        path: "/calendario",
-        element: <Calendar />,
-      },
-      {
-        path: "/equipamentos",
-        element: <Equipments />,
-      },
-      {
-        path: "/perfil",
-        element: <Profile />,
-      },
-      {
-        path: "/recordes",
-        element: <Records />,
-      },
-      {
-        path: "/segmentos",
-        element: <Segments />,
-      },
-      {
-        path: "/volume",
-        element: <VolumePage />,
-      },
-      {
-        path: "/elevacao",
-        element: <ElevationPage />,
-      },
-      {
-        path: "/zonas-de-ritmo",
-        element: <PerformancePage />,
-      },
-      {
-        path: "/estatisticas",
-        element: <StatisticsPage />,
+        element: <Layout />,
+        children: [
+          { path: "/dashboard", element: <Dashboard /> },
+          { path: "/atividades", element: <Activities /> },
+          { path: "/calendario", element: <Calendar /> },
+          { path: "/equipamentos", element: <Equipments /> },
+          { path: "/perfil", element: <Profile /> },
+          { path: "/recordes", element: <Records /> },
+          { path: "/segmentos", element: <Segments /> },
+          { path: "/volume", element: <VolumePage /> },
+          { path: "/elevacao", element: <ElevationPage /> },
+          { path: "/zonas-de-ritmo", element: <PerformancePage /> },
+          { path: "/estatisticas", element: <StatisticsPage /> },
+        ],
       },
     ],
   },

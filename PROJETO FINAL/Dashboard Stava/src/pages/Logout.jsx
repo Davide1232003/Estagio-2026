@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogOut, Loader2 } from "lucide-react";
+
+import { removeToken } from "../utils/stravaClient";
+
 import fundo from "../assets/fundo.jpg";
 
 function Logout() {
@@ -8,12 +11,10 @@ function Logout() {
 
   useEffect(() => {
     // Limpa o token imediatamente ao entrar na página
-    localStorage.removeItem("strava_token");
-
+    removeToken();
     const timer = setTimeout(() => {
       navigate("/");
     }, 2000);
-
     return () => clearTimeout(timer);
   }, [navigate]);
 
@@ -29,9 +30,9 @@ function Logout() {
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
-      {/* Container com o teu Design de Perfil */}
+      {/* Design do Logout */}
       <div className="relative z-10 w-full max-w-sm px-6">
-        <div className="bg-white/[0.01] backdrop-blur-[15px] border border-white/20 rounded-[30px] p-10 shadow-2xl flex flex-col items-center text-center animate-in fade-in zoom-in duration-500">
+        <div className="bg-white/1 backdrop-blur-[15px] border border-white/20 rounded-[30px] p-10 shadow-2xl flex flex-col items-center text-center animate-in fade-in zoom-in duration-500">
           <div className="w-20 h-20 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center text-red-500 mb-6">
             <LogOut size={32} />
           </div>

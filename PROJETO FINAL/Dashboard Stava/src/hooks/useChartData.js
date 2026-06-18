@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { formatDate } from "../utils/conversions";
+import { formatDate } from "../utils/formatting";
 
 export const useChartData = (activities) => {
   return useMemo(() => {
