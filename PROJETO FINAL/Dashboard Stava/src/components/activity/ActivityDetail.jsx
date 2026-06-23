@@ -118,9 +118,9 @@ function ActivityDetail({ activity }) {
       </div>
 
       {/* Mapa + Stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 min-h-0">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:flex-1 lg:min-h-0">
         {/* Mapa */}
-        <div className="lg:col-span-8 h-64 lg:h-full min-h-80 rounded-2xl bg-white/5 border border-white/10 overflow-hidden relative group">
+        <div className="lg:col-span-8 h-64 lg:h-full rounded-2xl bg-white/5 border border-white/10 overflow-hidden relative group">
           {mapUrl ? (
             <img
               src={mapUrl}
@@ -143,8 +143,8 @@ function ActivityDetail({ activity }) {
         </div>
 
         {/* StatCards */}
-        <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 gap-2 pr-1 overflow-y-auto custom-scrollbar text-xs">
-          <div className="scale-95 origin-top-left space-y-2 flex flex-col h-full lg:h-auto lg:block *:py-1.5 *:px-3 *:min-h-0">
+        <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 gap-2 pr-1 lg:overflow-y-auto custom-scrollbar text-xs">
+          <div className="scale-95 origin-top-left space-y-2 lg:block *:py-1.5 *:px-3 *:min-h-0">
             <StatCard
               title="Tempo"
               value={formatHours(activity.moving_time)}

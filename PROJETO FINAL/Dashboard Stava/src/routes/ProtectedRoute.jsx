@@ -1,20 +1,27 @@
 import { Navigate, Outlet, useSearchParams } from "react-router-dom";
-import { getToken, setToken } from "../utils/stravaClient";
+import {
+  getToken,
+  setToken,
+  setTokenExpiry,
+  isTokenExpired,
+} from "../utils/stravaClient";
 
 function ProtectedRoute() {
   const [searchParams] = useSearchParams();
 
-  // Token vindo do callback do Strava
+  // Chegou a token no URL? (vindo do callback do Strava)
   const tokenFromUrl = searchParams.get("token");
+  const expiresAtFromUrl = searchParams.get("expires_at");
   if (tokenFromUrl) {
-    setToken(tokenFromUrl); // Guarda no localStorage
+    setToken(tokenFromUrl);
+    if (expiresAtFromUrl) setTokenExpiry(expiresAtFromUrl);
   }
 
-  // Sem token redireciona para login
+  // Tem token? não está expirado?
   const token = getToken();
-  if (!token) return <Navigate to="/" replace />;
+  if (!token || isTokenExpired()) return <Navigate to="/" replace />;
 
-  // Com token renderiza a página
+  // ok, renderiza a página pedida
   return <Outlet />;
 }
 

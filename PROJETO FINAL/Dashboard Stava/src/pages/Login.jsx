@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getToken } from "../utils/stravaClient";
+import { getToken, isTokenExpired } from "../utils/stravaClient";
 
 import fundo from "../assets/fundo.jpg";
 
@@ -15,10 +15,10 @@ function Login() {
     window.location.href = "http://localhost:3000/login";
   };
 
-  // caso já exista o token, redireciona para o dashboard
+  // redireciona só se o token existir e não tiver expirado
   useEffect(() => {
     const token = getToken();
-    if (token) {
+    if (token && !isTokenExpired()) {
       navigate("/dashboard");
     }
   }, [navigate]);

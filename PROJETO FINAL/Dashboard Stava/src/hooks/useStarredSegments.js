@@ -40,9 +40,9 @@ export const useStarredSegments = (activities = []) => {
 
         setStarred(detailedStarred.filter(Boolean));
 
-        // Usa todas as atividades já carregadas
+        // Usa as últimas 100 atividades para limitar pedidos à API
         const detailedActivities = await Promise.all(
-          activities.map(async (act) => {
+          activities.slice(0, 100).map(async (act) => {
             try {
               const res = await axios.get(
                 `https://www.strava.com/api/v3/activities/${act.id}`,

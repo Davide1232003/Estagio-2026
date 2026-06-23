@@ -12,6 +12,8 @@ import {
   TrendingUp,
   Award,
   PieChart,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 import Loading from "../../components/Loading";
@@ -112,6 +114,36 @@ function Calendar() {
     calendarApi.gotoDate(
       `${yearVal}-${String(activeMonth + 1).padStart(2, "0")}-02`,
     );
+  };
+
+  // Navegar para o mês anterior
+  const handlePrevMonth = () => {
+    let newMonth = activeMonth - 1;
+    let newYear = activeYear;
+    if (newMonth < 0) {
+      newMonth = 11;
+      newYear -= 1;
+    }
+    setActiveMonth(newMonth);
+    setActiveYear(newYear);
+    calendarRef.current
+      .getApi()
+      .gotoDate(`${newYear}-${String(newMonth + 1).padStart(2, "0")}-02`);
+  };
+
+  // Navegar para o mês seguinte
+  const handleNextMonth = () => {
+    let newMonth = activeMonth + 1;
+    let newYear = activeYear;
+    if (newMonth > 11) {
+      newMonth = 0;
+      newYear += 1;
+    }
+    setActiveMonth(newMonth);
+    setActiveYear(newYear);
+    calendarRef.current
+      .getApi()
+      .gotoDate(`${newYear}-${String(newMonth + 1).padStart(2, "0")}-02`);
   };
 
   // Processamento de estatísticas do mês
@@ -255,41 +287,37 @@ function Calendar() {
         </div>
 
         {/* Menu com Filtros */}
-        <div className="flex flex-wrap items-center gap-3 relative z-50">
-          <div className="scale-90 origin-right">
-            <Menu
-              options={sportOptions}
-              activeValue={sportFilter}
-              onChange={setSportFilter}
-              layoutId="cal_sport_tabs"
-              activeColorClass={
-                sportFilter === "Run" ? "bg-orange-500/20" : "bg-blue-500/20"
-              }
-            />
+        <div className="flex items-center gap-4 relative z-50">
+          <Menu
+            options={sportOptions}
+            activeValue={sportFilter}
+            onChange={setSportFilter}
+            layoutId="cal_sport_tabs"
+            activeColorClass={
+              sportFilter === "Run" ? "bg-orange-500/20" : "bg-blue-500/20"
+            }
+          />
+
+          <div className="w-px h-6 bg-white/10"></div>
+
+          {/* Navegação mês/ano > */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePrevMonth}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <span className="text-sm font-bold text-slate-200 tracking-wide min-w-30 text-center">
+              {MESES[activeMonth]} {activeYear}
+            </span>
+            <button
+              onClick={handleNextMonth}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+            >
+              <ChevronRight size={16} />
+            </button>
           </div>
-
-          <div className="w-px h-6 bg-white/10 hidden sm:block"></div>
-
-          {/* Dropbox de Mês */}
-          <Dropdown
-            label={MESES[activeMonth]}
-            options={MESES.map((m, idx) => ({ label: m, value: idx }))}
-            activeValue={activeMonth}
-            onSelect={handleMonthSelect}
-            isOpen={isMonthOpen}
-            onToggle={() => { setIsMonthOpen(!isMonthOpen); setIsYearOpen(false); }}
-          />
-
-          {/* Dropbox de Ano */}
-          <Dropdown
-            label={activeYear}
-            options={ANOS.map((a) => ({ label: a, value: a }))}
-            activeValue={activeYear}
-            onSelect={handleYearSelect}
-            isOpen={isYearOpen}
-            onToggle={() => { setIsYearOpen(!isYearOpen); setIsMonthOpen(false); }}
-            alignRight
-          />
         </div>
       </div>
 

@@ -7,6 +7,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Elimina o aviso de browser do ngrok
+app.use((req, res, next) => {
+  res.setHeader("ngrok-skip-browser-warning", "true");
+  next();
+});
+
 // Rota de Login
 app.get("/login", (req, res) => {
   const scope = "read,activity:read_all,profile:read_all";
@@ -17,10 +23,10 @@ app.get("/login", (req, res) => {
 
 // Rota para trocar o código pelo token
 app.get("/exchange_token", async (req, res) => {
-  const { code } = req.query;
+  const { code } = req.query; // código temporário que o Strava envia
 
   if (!code) {
-    return res.status(400).json({ erro: "No code provided" });
+    return res.status(400).json({ erro: "Nenhum código obtido" });
   }
 
   try {
@@ -36,14 +42,14 @@ app.get("/exchange_token", async (req, res) => {
       headers: { "Accept-Encoding": "application/json" },
     });
 
-    const { access_token } = response.data;
+    const { access_token, expires_at } = response.data;
     return res.redirect(
-      `http://localhost:5173/dashboard?token=${access_token}`,
+      `http://localhost:5173/dashboard?token=${access_token}&expires_at=${expires_at}`,
     );
   } catch (error) {
     console.error("Strava Error:", error.response?.data || error.message);
     return res.status(500).json({
-      erro: "Falha na troca de token",
+      erro: "Falha na troca da token",
       detalhes: error.response?.data || error.message,
     });
   }
